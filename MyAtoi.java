@@ -1,13 +1,8 @@
-public class test{
+public class MyAtoi{
     public static void main(String[] args) {
-        Solution solution =new Solution();
-        System.out.println(solution.myAtoi("-9128"));
     }
 }
-/*
- * 
- */
-class Solution {
+/*class Solution {
     public int myAtoi(String s) {
         int beginPos=0,i;
         for(i=0; i<s.length(); i++) {
@@ -45,4 +40,4 @@ class Solution {
         }
         return (int)ans;
     }
-}
+}*/
