@@ -69,7 +69,7 @@ class Solution {
                     continue;
                 minNum=Math.min(list.val, minNum);
             }
-
+			//设置一个很大的值也可以
             if(minNum==Integer.MAX_VALUE)//全都null
                 break;
             for(int i=0;i<lists.length;i++){
@@ -90,34 +90,101 @@ class Solution {
 
 ```java
 class Solution {
-    public ListNode mergeKLists(ListNode[] lists) {
-        //链表接到一起
-        if(lists.length==0)
-            return null;
-        //多次遍历，把每次最小的遍历到上面
-        ListNode ansHeader=new ListNode(0,null);
-        ListNode ansTailer=ansHeader;
-        while(true){
-            ListNode minNode=null;        
-            for(var list:lists){
-                if(list==null)
+    public ListNode mergeKLists(ListNode[] lists) { 
+        int k = lists.length;
+        ListNode dummyHead = new ListNode(0);
+        ListNode tail = dummyHead;
+        while (true) {
+            ListNode minNode = null;
+            int minPointer = -1;
+            for (int i = 0; i < k; i++) {
+                if (lists[i] == null) {
                     continue;
-                if(minNode==null||minNode.val>list.val)
-                {
-                    minNode=list;
+                }
+                if (minNode == null || lists[i].val < minNode.val) {
+                    minNode = lists[i];
+                    minPointer = i;
                 }
             }
-            if(minNode==null)
+            //上面是一个很好的求最小值的一个方法，先设置一个离谱的初值，然后通过第一次判断来确定。
+            //可以用于最小值捆绑的时候
+            if (minPointer == -1) {
                 break;
-            ansTailer.next=minNode;
-            ansTailer=ansTailer.next;
-            for(int i=0;i<lists.length;i++){
-                if(lists[i]==minNode)
-                    lists[i]=lists[i].next;
-            } 
+            }
+            tail.next = minNode;
+            tail = tail.next;
+            lists[minPointer] = lists[minPointer].next;
         }
-        return ansHeader.next;
-     }
+        return dummyHead.next;
+    }
 }
+
 ```
+
+
+
+```
+java的for(var val:lists);增强for循环是引用，是把值传过去，改变val的值，不会改变lists里面的值。
+```
+
+### 优先队列[优先队列(PriorityQueue) - 简书 (jianshu.com)](https://www.jianshu.com/p/cb591a12f50c)
+
+普通的队列是一种先进先出的数据结构，元素在队列尾追加，而从队列头删除。在优先队列中，元素被赋予优先级。当访问元素时，具有最高优先级的元素最先删除。优先队列具有最高级先出 （first in, largest out）的行为特征。通常采用堆数据结构来实现。
+
+c++中优先队列只可以使用仿函数
+
+**`template <class T, class Container = vector<T>, class Compare = less<typename Container::value_type> > class priority_queue;`**
+
+```
+最大优先队列：priority_queue<int> MaxHeap;
+
+                  或：priority_queue<int，vector<int>, less<int> > MaxHeap
+
+最小优先队列：priority_queue<int，vector<int>，greater<int> > MinHeap;
+```
+
+
+
+### 堆，优先队列就是最小堆和最大堆
+
+堆严格意义上来说又叫二叉堆（Binary Heap），因为它的结构是一颗完全二叉树，堆一般分为最大堆和最小堆。
+
+堆性质：
+ 结构性：堆是一颗除底层外被完全填满的二叉树，底层的节点从左到右填入，这样的树叫做完全二叉树。即缺失结点的部分一定再树的右下侧。
+
+堆序性：由于我们想很快找出最小元，则最小元应该在根上，任意节点都小于它的后裔，这就是小顶堆（Min-Heap）；如果是查找最大元，则最大元应该在根上，任意节点都要大于它的后裔，这就是大顶堆(Max-heap)。
+
+```
+堆的上浮和下沉操作
+```
+
+### java的优先队列
+
+```java
+peek()//返回队首元素
+poll()//返回队首元素，队首元素出队列
+add()//添加元素
+size()//返回队列元素个数
+isEmpty()//判断队列是否为空，为空返回true,不空返回false
+//构造方法
+    Queue<ListNode>pq =new PriorityQueue<>(函数的引用);
+```
+
+### 比较器
+
+Comparable和Comparator在java中都是用于来比较数据大小。
+
+实现Comparable接口需要重写compareTo方法，
+
+实现Comparator方法需要重写compare方法。
+
+ 这两个方法返回值都是int类型，根据返回值来判断比较对象的大小，从而实现排序。
+
+### 函数引用
+
+函数可以传给一个参数的
+
+Function stringToInteger = Integer::parseInt;
+
+### Java Lambda 表达式
 
