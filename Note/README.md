@@ -165,9 +165,11 @@ peek()//返回队首元素
 poll()//返回队首元素，队首元素出队列
 add()//添加元素
 size()//返回队列元素个数
+offer()// 是往队列中添加一个元素，若队列已满而仍往队列中添加，则会返回false
 isEmpty()//判断队列是否为空，为空返回true,不空返回false
 //构造方法
     Queue<ListNode>pq =new PriorityQueue<>(函数的引用);
+//可以用于排序
 ```
 
 ### 比较器
@@ -184,7 +186,39 @@ Comparable和Comparator在java中都是用于来比较数据大小。
 
 函数可以传给一个参数的
 
+![image-20221015194022851](README.assets/image-20221015194022851.png)
+
+函数接口可以直接new后面加（）来重写
+
 Function stringToInteger = Integer::parseInt;
 
 ### Java Lambda 表达式
+
+```java
+(parameters) -> expression[表达式]
+(parameters) -> statements[语句]
+(parameters) ->{ statements; }
+
+// 1. 不需要参数,返回值为 2
+()->2
+// 2. 接收一个参数(数字类型),返回其2倍的值
+x->2*x//表达式
+// 3. 接受2个参数(数字),并返回他们的和
+(x,y) -> x+y//表达式
+// 4. 接收2个int型整数,返回他们的乘积
+(int x,int y) -> x * y//表达式
+// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)
+(String s) -> System.out.print(s)语句
+```
+
+函数式接口（只要一个方法的抽象对象）可以和lambda表达式混用
+
+```
+参数类型可以省略，如果需要省略，每个参数的类型都要省略。
+参数的小括号里面只有一个参数，那么小括号可以省略
+如果方法体当中只有一句代码，那么大括号可以省略
+如果方法体中只有一条语句，其是return语句，那么大括号可以省略，且去掉return关键字。
+```
+
+小括号和大括号和return在不影响意思的情况下都可以省略
 
